@@ -1,0 +1,24 @@
+{
+  "name": "xibs-xv-bot",
+  "version": "1.0.0",
+  "description": "XIBS-XV: Your ultimate WhatsApp bot for AI, tools, and entertainment. Powered by Permanent Bot Lord: 255754206718",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "whatsapp-bot",
+    "xibs-xv",
+    "ai",
+    "tools",
+    "bot-lord"
+  ],
+  "author": "Permanent Bot Lord",
+  "license": "MIT",
+  "dependencies": {
+    "moment-timezone": "^0.5.45",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.23.0"
+  }
+}
