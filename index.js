@@ -1,4 +1,4 @@
-// ====== Requires na Ufafanuzi wa Variables ======
+
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const moment = require('moment-timezone'); // Kwa tarehe na saa
@@ -864,10 +864,10 @@ client.on('message', async msg => {
             // Hii itajibu kwa ujumbe wowote usiojibu amri yoyote iliyopo.
             // Inaweza kuwa na kelele sana, hivyo nimeiacha iwe comment kwa sasa.
             // Kama unataka bot ijibu amri zisizojulikana, ondoa comment.
-            // await msg.reply(`Amri \`${command}\` haijatambuliwa. Andika \`${BOT_PREFIX}menu\` kuona orodha ya amri.`);
+             await msg.reply(`Amri \`${command}\` haijatambuliwa. Andika \`${BOT_PREFIX}menu\` kuona orodha ya amri.`);
             break;
     }
-    // Hapa ndio mwisho wa client.on('message', async msg => { ... }) block.
+     client.on('message', async msg => { ... }) block.
 });
 
 
