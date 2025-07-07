@@ -870,7 +870,5 @@ client.on('message', async msg => {
     // Hapa ndio mwisho wa client.on('message', async msg => { ... }) block.
 });
 
-// ====== Mwanzo wa Bot ======
-// Hii command inaanza mchakato wa kuunganisha bot na WhatsApp.
-// Hii imerekebishwa - Ondoa comments zote mbili (`//`)!
+
 client.initialize();
