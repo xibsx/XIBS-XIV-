@@ -19,9 +19,9 @@
   "dependencies": {
     "moment-timezone": "^0.5.45",
     "qrcode-terminal": "^0.12.0",
-    "whatsapp-web.js": "1.21.0" <--- BADILISHA HII
+    "whatsapp-web.js": "1.23.0" <--- RUDISHA HII (Au jaribu "1.23.0")
   },
   "engines": {
-    "node": "18.x" <--- ONGEZA HII
+    "node": "20.x" <--- BADILISHA HII (kutoka "18.x" kwenda "20.x")
   }
 }
