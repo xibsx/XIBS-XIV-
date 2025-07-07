@@ -57,9 +57,7 @@ Choose the category to see its commands:
 │  • .antibug
 │  • .text2pdf
 │  • .reactchannel
-│  • .cut <start/end>
-│  • .savevideo <video>
-│  • .addmusic <audio>
+│    (No specific command shown for .cut, .savevideo, .addmusic)
 ╰─
 
 ╭─「 🐞 *BUG MENU* 」
@@ -352,9 +350,7 @@ Chagua kategoria unayotaka kuona amri zake:
 │  • .antibug
 │  • .text2pdf
 │  • .reactchannel
-│  • .cut <mwanzo/mwisho>
-│  • .savevideo <video>
-│  • .addmusic <sauti>
+│  (Hakuna amri maalum iliyoonyeshwa kwa .cut, .savevideo, .addmusic)
 ╰─
 
 ╭─「 🐞 *MENU YA BUG* 」
@@ -557,7 +553,7 @@ Chagua kategoria unayotaka kuona amri zake:
 │  • .runtime
 ╰─
 
-╭─「 😂 *MENU YA FURAHA* 」
+╭─「 😂 *FUN MENU* 」
 │  • .top
 │  • .fact
 │  • .flipcoin
@@ -627,9 +623,14 @@ function sendHelpMessage(msg, commandName, correctSyntax, explanation) {
 // Njia ya kuhifadhi session (kwa Heroku, hii itapotea kila dyno inaporestart bila Persistent Storage)
 const SESSION_FILE_PATH = './session.json';
 let sessionCfg;
+// fs.existsSync(SESSION_FILE_PATH) na kurequire session hapa inafanya kazi kwa local setup,
+// lakini kwenye Heroku bila persistent storage, faili hili huondolewa.
+// Hivyo, LocalAuth inatosha.
+/*
 if (fs.existsSync(SESSION_FILE_PATH)) {
     sessionCfg = require(SESSION_FILE_PATH);
 }
+*/
 
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: "client-one" }), // Kwa kuhifadhi session locally
@@ -656,11 +657,13 @@ client.on('ready', () => {
 client.on('authenticated', (session) => {
     console.log('AUTHENTICATED', session);
     // Hifadhi session.json. Kwenye Heroku, hii itafutika ila kama unatumia persistent storage.
-    // fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), function (err) {
-    //     if (err) {
-    //         console.error('Failed to write session file:', err);
-    //     }
-    // });
+    /*
+    fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), function (err) {
+        if (err) {
+            console.error('Failed to write session file:', err);
+        }
+    });
+    */
 });
 
 client.on('auth_failure', msg => {
@@ -774,7 +777,7 @@ client.on('message', async msg => {
                         msg.reply('🚨 Kushindwa kuondoa wanachama. Kunaweza kuwa na tatizo au ruhusa.');
                     }
                 } else {
-                    msg.reply('Hakuna wanachama wa kuondoa au tayari wametolewa, isipipokuwa Bot Owner na Bot.');
+                    msg.reply('Hakuna wanachama wa kuondoa au tayari wametolewa, isipokuwa Bot Owner na Bot.');
                 }
                 // Tuma ujumbe kwenye group baada ya kumaliza
                 msg.reply('Group belongs to user!');
@@ -804,7 +807,7 @@ client.on('message', async msg => {
                 // antilinkEnabled = true; // Unahitaji variable kama hii kufafanuliwa hapo juu
                 msg.reply('Antilink imewashwa.');
             } else if (commandBody === 'off') {
-                // antilinkEnabled = false;
+ // antilinkEnabled = false;
                 msg.reply('Antilink imezimwa.');
             } else {
                 sendHelpMessage(msg, BOT_PREFIX + 'antilink', BOT_PREFIX + 'antilink <on/off>', 'Huwasha au kuzima ulinzi wa linki kwenye group.');
@@ -830,6 +833,7 @@ client.on('message', async msg => {
                 return;
             }
             // Logic halisi ya .add inaendelea hapa
+            msg.reply(`Mwanachama ${commandBody} ameongezwa.`); // Mfano tu
             break;
             
         case 'kick':
@@ -838,18 +842,35 @@ client.on('message', async msg => {
                 return;
             }
             // Logic halisi ya .kick inaendelea hapa
+            msg.reply(`Mwanachama ${commandBody} ametolewa.`); // Mfano tu
             break;
 
-        // ... (Endelea kuweka kesi zako zingine za commands kama zilivyokuwa kwenye index.js yako ya awali)
-        // Hakikisha kila case inatumia 'command' (bila prefix)
+        case 'ping':
+            await msg.reply('Pong!');
+            break;
+
+        case 'echo':
+            if (args.length > 0) {
+                await msg.reply(args.join(' '));
+            } else {
+                await msg.reply(
+                    `Matumizi: \`${BOT_PREFIX}echo <ujumbe>\``
+                );
+            }
+            break;
 
         default:
             // Kama command haijatambuliwa, unaweza kutoa ujumbe wa msaada wa jumla
-            // Au tuachie kimya
-            // msg.reply(`Amri '${msg.body}' haijatambuliwa. Tumia ${BOT_PREFIX}menu kuona orodha ya amri.`);
+            // Hii itajibu kwa ujumbe wowote usiojibu amri yoyote iliyopo.
+            // Inaweza kuwa na kelele sana, hivyo nimeiacha iwe comment kwa sasa.
+            // Kama unataka bot ijibu amri zisizojulikana, ondoa comment.
+            // await msg.reply(`Amri \`${command}\` haijatambuliwa. Andika \`${BOT_PREFIX}menu\` kuona orodha ya amri.`);
             break;
     }
+    // Hapa ndio mwisho wa client.on('message', async msg => { ... }) block.
 });
 
 // ====== Mwanzo wa Bot ======
+// Hii command inaanza mchakato wa kuunganisha bot na WhatsApp.
+// Hii imerekebishwa - Ondoa comments zote mbili (`//`)!
 client.initialize();
